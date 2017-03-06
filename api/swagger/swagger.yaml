@@ -33,6 +33,25 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Add a new movie to the list
+      parameters:
+      - name: title
+        description: Movie properties
+        in: body
+        required: true
+        schema:
+          $ref: "#/definitions/Movie"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -53,6 +72,30 @@ definitions:
               type: string
             year:
               type: number
+  Movie:
+    type: object
+    properties:
+      title:
+        type: string
+        description: Task object name
+      year:
+        type: number
+        description: Task description
+    required:
+    - title
+    - year
+  GeneralResponse:
+    type: object
+    properties:
+      success:
+        type: number
+        description: returns 1 if successful
+      description:
+        type: string
+        description: A short comment
+    required:
+      - success
+      - description
   ErrorResponse:
     required:
       - message
