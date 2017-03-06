@@ -19,11 +19,11 @@ produces:
   - application/json
 paths:
   /movie:
-    #our controller name
+    # our controller name
     x-swagger-router-controller: movie
     get:
       description: Get the move list
-      #define the type of response for Success "200"
+      #define the type of response for Success "200" and Error
       responses:
         200:
           description: Success
@@ -51,7 +51,27 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-    
+  /movie/{id}:
+    # our controller name
+    x-swagger-router-controller: movie
+    get:
+      description: Get a movie
+      # define the type of response for Success "200" and Error
+      parameters:
+      - name: id 
+        description: Movie properties
+        type: string
+        in: path 
+        required: true
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/GetMovieResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -72,6 +92,18 @@ definitions:
               type: string
             year:
               type: number
+  GetMovieResponse:
+    required:
+    - id
+    - title
+    - year
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+      year:
+        type: number
   Movie:
     type: object
     properties:
